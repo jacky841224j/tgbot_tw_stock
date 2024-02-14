@@ -1,0 +1,59 @@
+name: Deploy to EC2
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x 
+    
+    - name: Build .NET app
+      run: dotnet build
+          
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: Test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+    # 將BotToken 插入到 appsettings.json 中
+      - name: Add BotToken
+        run: |
+          sed -i "s/\"BotToken\": \".*\"/\"BotToken\": \"${{ secrets.BOT_TOKEN }}\"/" appsettings.json
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1 
+        with:
+          # 使用你的 Docker Hub 使用者名稱和ACCESS_TOKEN
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ github.workspace }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest  
+  
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+              sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest || true
+              sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest
+              sudo docker run -d --restart=unless-stopped  ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest
