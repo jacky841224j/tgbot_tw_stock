@@ -30,10 +30,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         public async Task GetChartAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
             await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
-                                                    new PageGotoOptions
-                                                    {
-                                                        WaitUntil = WaitUntilState.Load
-                                                    }).WaitAsync(new TimeSpan(0, 1, 0));
+                                                    new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60 });
 
             _logger.LogInformation("等待元素載入...");
             //等待元素載入
@@ -62,10 +59,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         public async Task GetRangeAsync(int stockNumber, long chatID, string? input, CancellationToken cancellationToken)
         {
             await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
-                                        new PageGotoOptions
-                                        {
-                                            WaitUntil = WaitUntilState.Load
-                                        }).WaitAsync(new TimeSpan(0, 1, 0));
+                                        new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60 });
 
             string range;
 
