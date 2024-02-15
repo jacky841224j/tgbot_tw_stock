@@ -49,6 +49,6 @@ FROM base AS final
 WORKDIR /app
 
 COPY --from=publish /app/publish .
-RUN pwsh -Command "./playwright.ps1 install"
+RUN pwsh -Command "./playwright.ps1 install --with-deps chromium"
 
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet TGBot_TW_Stock_Polling.dll
