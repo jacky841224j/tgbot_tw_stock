@@ -33,7 +33,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         public async Task GetKlineAsync(int stockNumber, long chatID, string? input, CancellationToken cancellationToken)
         {
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
-                        new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 6000 });
+                        new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
             _logger.LogInformation("等待元素載入...");
 
@@ -87,7 +87,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
             };
 
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
-                            new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 6000 });
+                            new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
             _logger.LogInformation("等待元素載入...");
             //await _browserHandlers._page.GetByRole(AriaRole.Button, new() { Name = "日K" }).ClickAsync();
@@ -161,7 +161,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         public async Task GetPerformanceAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
-                           new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 6000 });
+                           new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
             _logger.LogInformation("等待元素載入...");
 
@@ -205,7 +205,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         public async Task GetNewsAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
-                           new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 6000 });
+                           new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
             _logger.LogInformation("定位網站中...");
 
             //拆解元素
