@@ -54,6 +54,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+              sudo docker stop tgbot_tw_stock_polling || true
+              sudo docker rm tgbot_tw_stock_polling || true
               sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest || true
               sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest
-              sudo docker run -d --restart=unless-stopped  ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest
+              sudo docker run -d --name tgbot_tw_stock_polling --restart=unless-stopped  ${{ secrets.DOCKER_HUB_USERNAME }}/tgbot_tw_stock_polling:latest
