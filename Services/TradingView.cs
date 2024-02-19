@@ -29,6 +29,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetChartAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
             await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
                                                     new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
@@ -46,6 +47,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
                parseMode: ParseMode.Html,
                cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
+
+            await _browserHandlers.ReleaseBrowser();
         }
 
         /// <summary>
@@ -58,6 +61,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetRangeAsync(int stockNumber, long chatID, string? input, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
+
             await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
                                         new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
@@ -150,6 +155,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
                cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
             #endregion
+
+            await _browserHandlers.ReleaseBrowser();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
     public class BrowserHandlers
     {
         private readonly ILogger<BrowserHandlers> _logger;
-        private IPlaywright? _playwright;
+        public IPlaywright? _playwright;
         public IBrowser? _browser;
         public IPage? _page;
 
@@ -14,11 +14,44 @@ namespace Telegram.Bot.Examples.WebHook.Services
             _logger = logger;
         }
 
-        public async Task CreateBrowserAsync()
+
+        /// <summary>
+        /// 啟動套件
+        /// </summary>
+        /// <returns></returns>
+        public async Task LunchesPlaywright()
         {
-            #region 建立瀏覽器
-            _logger.LogInformation($"設定瀏覽器");
             _playwright = await Playwright.CreateAsync();
+        }
+
+        /// <summary>
+        /// 啟動瀏覽器流程
+        /// </summary>
+        /// <returns></returns>
+        public async Task CreateBrowser()
+        {
+            await SettingBrowser();
+            await SettingPage();
+        }
+
+        /// <summary>
+        /// 釋放瀏覽器流程
+        /// </summary>
+        /// <returns></returns>
+        public async Task ReleaseBrowser()
+        {
+            await ClosePage();
+            await CloseBrowser();
+        }
+
+        /// <summary>
+        /// 設定瀏覽器
+        /// </summary>
+        /// <returns></returns>
+        public async Task SettingBrowser()
+        {
+            _logger.LogInformation($"設定瀏覽器");
+
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 //路徑會依瀏覽器版本不同有差異，若有錯時請修正路徑
@@ -33,10 +66,43 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 Headless = true,
                 Timeout = 0,
             });
-            _page = await _browser.NewPageAsync();
-            await _page.SetViewportSizeAsync(1920, 1080);
             _logger.LogInformation($"瀏覽器設定完成");
-            #endregion
         }
+
+        /// <summary>
+        /// 設定頁面
+        /// </summary>
+        /// <returns></returns>
+        public async Task SettingPage()
+        {
+            _logger.LogInformation($"設定頁面中");
+
+            //新增頁面
+            _page = await _browser.NewPageAsync();
+            //設定頁面大小
+            await _page.SetViewportSizeAsync(1920, 1080);
+
+            _logger.LogInformation($"設定頁面完成");
+        }
+
+        /// <summary>
+        /// 關閉頁面
+        /// </summary>
+        /// <returns></returns>
+        public async Task ClosePage()
+        {
+            await _page.CloseAsync();
+        }
+
+        /// <summary>
+        /// 關閉瀏覽器
+        /// </summary>
+        /// <returns></returns>
+        public async Task CloseBrowser()
+        {
+            await _browser.CloseAsync();
+        }
+
+
     }
 }

@@ -1,6 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Examples.WebHook.Services;
 using Telegram.Bot.Services;
+using TGBot_TW_Stock_Polling.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddHttpClient("telegram_bot_client")
             TelegramBotClientOptions options = new(apikey);
             return new TelegramBotClient(options, httpClient);
         });
+builder.Services.AddHostedService<InitService>();
 builder.Services.AddSingleton<BrowserHandlers>();
 builder.Services.AddScoped<TradingView>();
 builder.Services.AddScoped<Cnyes>();

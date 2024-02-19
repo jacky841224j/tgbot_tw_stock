@@ -32,6 +32,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetKlineAsync(int stockNumber, long chatID, string? input, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
                         new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
@@ -61,6 +62,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
 
+            await _browserHandlers.ReleaseBrowser();
         }
 
         /// <summary>
@@ -72,6 +74,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetDetialPriceAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
             //股價資訊
             var InfoDic = new Dictionary<int, string>()
             {
@@ -149,6 +152,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 parseMode: ParseMode.Html,
                 cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
+
+            await _browserHandlers.ReleaseBrowser();
         }
 
         /// <summary>
@@ -160,6 +165,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetPerformanceAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
                            new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
@@ -192,6 +198,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 parseMode: ParseMode.Html,
                 cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
+
+            await _browserHandlers.ReleaseBrowser();
         }
        
         /// <summary>
@@ -204,6 +212,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task GetNewsAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
         {
+            await _browserHandlers.CreateBrowser();
             await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
                            new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
             _logger.LogInformation("定位網站中...");
@@ -232,6 +241,8 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 replyMarkup: inlineKeyboard,
                 cancellationToken: cancellationToken);
             _logger.LogInformation("已傳送資訊");
+
+            await _browserHandlers.ReleaseBrowser();
         }
     }
 }

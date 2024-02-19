@@ -12,18 +12,16 @@ public class UpdateHandler : IUpdateHandler
 {
     private readonly ITelegramBotClient _botClient;
     private readonly ILogger<UpdateHandler> _logger;
-    private readonly BrowserHandlers _browserHandlers;
     private readonly TradingView _tradingView;
     private readonly Cnyes _cnyes;
     private int StockNumber;
 
 
-    public UpdateHandler(ITelegramBotClient botClient, ILogger<UpdateHandler> logger, BrowserHandlers browserHandlers,
+    public UpdateHandler(ITelegramBotClient botClient, ILogger<UpdateHandler> logger,
                           TradingView tradingView, Cnyes cnyes)
     {
         _botClient = botClient;
         _logger = logger;
-        _browserHandlers = browserHandlers;
         _tradingView = tradingView;
         _cnyes = cnyes;
     }
@@ -67,8 +65,8 @@ public class UpdateHandler : IUpdateHandler
         {
             try
             {
-                if (_browserHandlers._browser == null)
-                    await _browserHandlers.CreateBrowserAsync();
+                //if (_browserHandlers._browser == null)
+                //    await _browserHandlers.SettingBrowser();
 
                 var text = messageText.Split().ToList();
                 int.TryParse(text[1], out StockNumber);
