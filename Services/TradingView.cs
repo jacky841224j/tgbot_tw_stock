@@ -27,28 +27,37 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <param name="chatID">使用者ID</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task GetChartAsync(int stockNumber, long chatID, CancellationToken cancellationToken)
+        public async Task GetChartAsync(string stockNumber, long chatID, CancellationToken cancellationToken)
         {
-            await _browserHandlers.CreateBrowser();
-            await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
-                                                    new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
+            try
+            {
+                await _browserHandlers.CreateBrowser();
+                await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
+                                                        new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
 
-            _logger.LogInformation("等待元素載入...");
-            //等待元素載入
-            await _browserHandlers._page.WaitForSelectorAsync("//div[@class= 'chart-markup-table']");
+                _logger.LogInformation("等待元素載入...");
+                //等待元素載入
+                await _browserHandlers._page.WaitForSelectorAsync("//div[@class= 'chart-markup-table']");
 
-            _logger.LogInformation("擷取網站中...");
+                _logger.LogInformation("擷取網站中...");
 
-            Stream stream = new MemoryStream(await _browserHandlers._page.Locator("//div[@class= 'chart-markup-table']").ScreenshotAsync());
+                Stream stream = new MemoryStream(await _browserHandlers._page.Locator("//div[@class= 'chart-markup-table']").ScreenshotAsync());
 
-            await _botClient.SendPhotoAsync(
-               chatId: chatID,
-               photo: InputFile.FromStream(stream),
-               parseMode: ParseMode.Html,
-               cancellationToken: cancellationToken);
-            _logger.LogInformation("已傳送資訊");
-
-            await _browserHandlers.ReleaseBrowser();
+                await _botClient.SendPhotoAsync(
+                   chatId: chatID,
+                   photo: InputFile.FromStream(stream),
+                   parseMode: ParseMode.Html,
+                   cancellationToken: cancellationToken);
+                _logger.LogInformation("已傳送資訊");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation("GetChartAsync：" + ex.Message);
+            }
+            finally
+            {
+                await _browserHandlers.ReleaseBrowser();
+            }
         }
 
         /// <summary>
@@ -59,104 +68,75 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <param name="input">使用者輸入參數</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task GetRangeAsync(int stockNumber, long chatID, string? input, CancellationToken cancellationToken)
+        public async Task GetRangeAsync(string stockNumber, long chatID, string? input, CancellationToken cancellationToken)
         {
-            await _browserHandlers.CreateBrowser();
-
-            await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
-                                        new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
-
-            string range;
-
-            #region backup
-            //await _botClient.SendChatActionAsync(
-            //       chatId: message.Chat.Id,
-            //       chatAction: ChatAction.Typing,
-            //       cancellationToken: cancellationToken);
-
-            //// Simulate longer running task
-            //await Task.Delay(500, cancellationToken);
-
-            //InlineKeyboardMarkup inlineKeyboard = new(
-            //    new[]
-            //    {
-            //            // first row
-            //            new []
-            //                {
-            //                    InlineKeyboardButton.WithCallbackData("時", "h"),
-            //                    InlineKeyboardButton.WithCallbackData("日", "d"),
-            //                    InlineKeyboardButton.WithCallbackData("週", "w"),
-            //                    InlineKeyboardButton.WithCallbackData("月", "m"),
-            //                },
-            //            // second row
-            //            new []
-            //                {
-            //                    InlineKeyboardButton.WithCallbackData("5分", "5m"),
-            //                    InlineKeyboardButton.WithCallbackData("10分", "10m"),
-            //                    InlineKeyboardButton.WithCallbackData("15分", "15m"),
-            //                    InlineKeyboardButton.WithCallbackData("30分", "30m"),
-            //                    InlineKeyboardButton.WithCallbackData("60分", "60m"),
-            //                },
-            //    });
-
-            //await _botClient.SendTextMessageAsync(
-            //    chatId: message.Chat.Id,
-            //    text: "請選擇K線週期",
-            //    replyMarkup: inlineKeyboard,
-            //    cancellationToken: cancellationToken);
-            #endregion
-
-            #region
-            switch (input)
+            try
             {
-                case "1d":
-                    range = "1D";
-                    break;
-                case "5d":
-                    range = "5D";
-                    break;
-                case "1m":
-                    range = "1M";
-                    break;
-                case "3m":
-                    range = "3M";
-                    break;
-                case "6m":
-                    range = "6M";
-                    break;
-                case "ytd":
-                    range = "YTD";
-                    break;
-                case "1y":
-                    range = "12M";
-                    break;
-                case "5y":
-                    range = "60M";
-                    break;
-                case "all":
-                    range = "ALL";
-                    break;
-                default:
-                    range = "YTD";
-                    break;
+                await _browserHandlers.CreateBrowser();
+
+                await _browserHandlers._page.GotoAsync($"https://tradingview.com/chart/?symbol=TWSE%3A{stockNumber}",
+                                            new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
+
+                string range;
+
+                #region
+                switch (input)
+                {
+                    case "1d":
+                        range = "1D";
+                        break;
+                    case "5d":
+                        range = "5D";
+                        break;
+                    case "1m":
+                        range = "1M";
+                        break;
+                    case "3m":
+                        range = "3M";
+                        break;
+                    case "6m":
+                        range = "6M";
+                        break;
+                    case "ytd":
+                        range = "YTD";
+                        break;
+                    case "1y":
+                        range = "12M";
+                        break;
+                    case "5y":
+                        range = "60M";
+                        break;
+                    case "all":
+                        range = "ALL";
+                        break;
+                    default:
+                        range = "YTD";
+                        break;
+                }
+                await _browserHandlers._page.Locator($"//button[@value = '{range}']").ClickAsync().WaitAsync(new TimeSpan(0, 1, 0));
+
+                _logger.LogInformation("等待元素載入...");
+                //等待元素載入
+                await _browserHandlers._page.WaitForSelectorAsync("//div[@class= 'chart-markup-table']");
+
+                _logger.LogInformation("擷取網站中...");
+                Stream stream = new MemoryStream(await _browserHandlers._page.Locator("//div[@class= 'chart-markup-table']").ScreenshotAsync());
+                await _botClient.SendPhotoAsync(
+                   chatId: chatID,
+                   photo: InputFile.FromStream(stream),
+                   parseMode: ParseMode.Html,
+                   cancellationToken: cancellationToken);
+                _logger.LogInformation("已傳送資訊");
+                #endregion
             }
-            await _browserHandlers._page.Locator($"//button[@value = '{range}']").ClickAsync().WaitAsync(new TimeSpan(0, 1, 0));
-
-            _logger.LogInformation("等待元素載入...");
-            //等待元素載入
-            await _browserHandlers._page.WaitForSelectorAsync("//div[@class= 'chart-markup-table']");
-
-            _logger.LogInformation("擷取網站中...");
-            Stream stream = new MemoryStream(await _browserHandlers._page.Locator("//div[@class= 'chart-markup-table']").ScreenshotAsync());
-            await _botClient.SendPhotoAsync(
-               chatId: chatID,
-               photo: InputFile.FromStream(stream),
-               parseMode: ParseMode.Html,
-               cancellationToken: cancellationToken);
-            _logger.LogInformation("已傳送資訊");
-            #endregion
-
-            await _browserHandlers.ReleaseBrowser();
+            catch(Exception ex)
+            {
+                _logger.LogInformation("GetRangeAsync：" + ex.Message);
+            }
+            finally
+            {
+                await _browserHandlers.ReleaseBrowser();
+            }
         }
     }
 }

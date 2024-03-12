@@ -14,8 +14,6 @@ public class UpdateHandler : IUpdateHandler
     private readonly ILogger<UpdateHandler> _logger;
     private readonly TradingView _tradingView;
     private readonly Cnyes _cnyes;
-    private int StockNumber;
-
 
     public UpdateHandler(ITelegramBotClient botClient, ILogger<UpdateHandler> logger,
                           TradingView tradingView, Cnyes cnyes)
@@ -65,11 +63,18 @@ public class UpdateHandler : IUpdateHandler
         {
             try
             {
-                //if (_browserHandlers._browser == null)
-                //    await _browserHandlers.SettingBrowser();
-
                 var text = messageText.Split().ToList();
-                int.TryParse(text[1], out StockNumber);
+
+                if(!int.TryParse(text[1], out _))
+                {
+                    await _botClient.SendTextMessageAsync(
+                        chatId: message.Chat.Id,
+                        text: "請輸入股票代碼",
+                        cancellationToken: cancellationToken);
+                    return;
+                }
+
+                var StockNumber = text[1];
 
                 _logger.LogInformation("讀取網站中...");
 

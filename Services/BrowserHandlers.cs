@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Playwright;
 
 namespace Telegram.Bot.Examples.WebHook.Services
 {
@@ -50,23 +51,30 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task SettingBrowser()
         {
-            _logger.LogInformation($"設定瀏覽器");
-
-            _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            try
             {
-                //路徑會依瀏覽器版本不同有差異，若有錯時請修正路徑
-                //使用docker執行時須使用下面參數，本機直接執行則不用
-                // ExecutablePath = "/root/.cache/ms-playwright/chromium-1055/chrome-linux/chrome",
-                Args = new[] {
+                _logger.LogInformation($"設定瀏覽器");
+
+                _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+                {
+                    //路徑會依瀏覽器版本不同有差異，若有錯時請修正路徑
+                    //使用docker執行時須使用下面參數，本機直接執行則不用
+                    // ExecutablePath = "/root/.cache/ms-playwright/chromium-1055/chrome-linux/chrome",
+                    Args = new[] {
                     "--disable-dev-shm-usage",
                     "--disable-setuid-sandbox",
                     "--no-sandbox",
                     "--disable-gpu"
                 },
-                Headless = true,
-                Timeout = 0,
-            });
-            _logger.LogInformation($"瀏覽器設定完成");
+                    Headless = true,
+                    Timeout = 0,
+                });
+                _logger.LogInformation($"瀏覽器設定完成");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation("SettingBrowser：" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -75,14 +83,21 @@ namespace Telegram.Bot.Examples.WebHook.Services
         /// <returns></returns>
         public async Task SettingPage()
         {
-            _logger.LogInformation($"設定頁面中");
+            try
+            {
+                _logger.LogInformation($"設定頁面中");
 
-            //新增頁面
-            _page = await _browser.NewPageAsync();
-            //設定頁面大小
-            await _page.SetViewportSizeAsync(1920, 1080);
+                //新增頁面
+                _page = await _browser.NewPageAsync();
+                //設定頁面大小
+                await _page.SetViewportSizeAsync(1920, 1080);
 
-            _logger.LogInformation($"設定頁面完成");
+                _logger.LogInformation($"設定頁面完成");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation("SettingPage：" + ex.Message);
+            }
         }
 
         /// <summary>
