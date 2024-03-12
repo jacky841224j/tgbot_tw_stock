@@ -8,31 +8,7 @@ RUN apt-get update \
     && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
     && apt-get install -y powershell \
-    && apt-get install libglib2.0-0 -y \
-    && apt-get install libnss3 -y \
-    && apt-get install libnspr4 -y \
-    && apt-get install libatk1.0-0 -y \
-    && apt-get install libatk-bridge2.0-0 -y \
-    && apt-get install libcups2 -y \
-    && apt-get install libdrm2 -y \
-    && apt-get install libdbus-1-3 -y \
-    && apt-get install libexpat1 -y \
-    && apt-get install libxcb1 -y \
-    && apt-get install libxkbcommon0 -y \
-    && apt-get install libx11-6 -y \
-    && apt-get install libxcomposite1 -y \
-    && apt-get install libxdamage1 -y \
-    && apt-get install libxext6 -y \
-    && apt-get install libxfixes3 -y \
-    && apt-get install libxrandr2 -y \
-    && apt-get install libgbm1 -y \
-    && apt-get install libgtk-3-0 -y \
-    && apt-get install libpango-1.0-0 -y \
-    && apt-get install libcairo2 -y \
-    && apt-get install libasound2 -y \
-    && apt-get install libatspi2.0-0 -y \
-    && apt-get install libxshmfence1 -y
-
+    && apt-get upgrade
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
