@@ -3,6 +3,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using System.Text;
 using Telegram.Bot.Types.ReplyMarkups;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Telegram.Bot.Examples.WebHook.Services
 {
@@ -194,9 +195,6 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 var cookiebutton = await _browserHandlers._page.QuerySelectorAsync("#__next > div._1GCLL > div > button._122qv");
                 await cookiebutton.ClickAsync();
 
-                //等待圖表載入
-                await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[1]//div//div[2]//div").WaitAsync(new TimeSpan(0, 1, 0));
-
                 //滾動網頁至最下方，觸發js
                 await _browserHandlers._page.EvaluateAsync(@"() => {
                     window.scrollTo({
@@ -205,9 +203,13 @@ namespace Telegram.Bot.Examples.WebHook.Services
                     });
                 }");
 
+                await _browserHandlers._page.WaitForTimeoutAsync(1500);
+
+                //等待圖表載入
+                await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[1]//div//div[2]//div").WaitAsync(new TimeSpan(0, 1, 0));
                 //等待數據載入
                 await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[2]//div//div//table").WaitAsync(new TimeSpan(0, 1, 0));
-                await _browserHandlers._page.WaitForTimeoutAsync(1500);
+                
 
                 //拆解元素
                 var element = await _browserHandlers._page.QuerySelectorAsync("//html//body//div[1]//div[1]//div[4]//div[2]//div[1]//div[1]//div[1]//div//div[2]//div[2]//h2");
