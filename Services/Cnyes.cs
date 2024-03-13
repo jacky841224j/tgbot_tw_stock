@@ -188,15 +188,25 @@ namespace Telegram.Bot.Examples.WebHook.Services
                 await _browserHandlers.CreateBrowser();
                 await _browserHandlers._page.GotoAsync($"https://www.cnyes.com/twstock/{stockNumber}",
                                new PageGotoOptions { WaitUntil = WaitUntilState.Load, Timeout = 60000 });
-
                 _logger.LogInformation("等待元素載入...");
+
+                //點選cookie提示按鈕
+                var cookiebutton = await _browserHandlers._page.QuerySelectorAsync("#__next > div._1GCLL > div > button._122qv");
+                await cookiebutton.ClickAsync();
 
                 //等待圖表載入
                 await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[1]//div//div[2]//div").WaitAsync(new TimeSpan(0, 1, 0));
 
-                //等待數據載入
-                //await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[2]//div//div//table").WaitAsync(new TimeSpan(0, 1, 0));
+                //滾動網頁至最下方，觸發js
+                await _browserHandlers._page.EvaluateAsync(@"() => {
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }");
 
+                //等待數據載入
+                await _browserHandlers._page.WaitForSelectorAsync("//html//body//div[1]//div[1]//div[4]//div[3]//section//div[2]//section//div[2]//div[2]//div//div//table").WaitAsync(new TimeSpan(0, 1, 0));
                 await _browserHandlers._page.WaitForTimeoutAsync(1500);
 
                 //拆解元素

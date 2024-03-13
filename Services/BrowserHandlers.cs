@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 
 namespace Telegram.Bot.Examples.WebHook.Services
 {

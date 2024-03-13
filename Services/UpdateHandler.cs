@@ -75,13 +75,13 @@ public class UpdateHandler : IUpdateHandler
                 _logger.LogInformation("讀取網站中...");
 
                 #region 測試網址
-                if (text[0] == "/url")
-                {
-                    await _botClient.SendTextMessageAsync(
-                    chatId: message.Chat.Id,
-                    text: "2023/10 已移除此功能，請使用其他功能",
-                    parseMode: ParseMode.Html,
-                    cancellationToken: cancellationToken);
+                //if (text[0] == "/url")
+                //{
+                //    await _botClient.SendTextMessageAsync(
+                //    chatId: message.Chat.Id,
+                //    text: "2023/10 已移除此功能，請使用其他功能",
+                //    parseMode: ParseMode.Html,
+                //    cancellationToken: cancellationToken);
 
                     //if (text.Count == 2)
                     //{
@@ -96,12 +96,12 @@ public class UpdateHandler : IUpdateHandler
                     //    parseMode: ParseMode.Html,
                     //    cancellationToken: cancellationToken);
                     //}
-                }
+                //}
                 #endregion
 
                 #region TradingView
 
-                else if (text[0] == "/chart")
+                if (text[0] == "/chart")
                 {
                     if (text.Count == 2)
                     {
