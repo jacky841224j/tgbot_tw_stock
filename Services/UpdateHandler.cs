@@ -67,10 +67,6 @@ public class UpdateHandler : IUpdateHandler
 
                 if(!int.TryParse(text[1], out _))
                 {
-                    await _botClient.SendTextMessageAsync(
-                        chatId: message.Chat.Id,
-                        text: "請輸入股票代碼",
-                        cancellationToken: cancellationToken);
                     return;
                 }
 
