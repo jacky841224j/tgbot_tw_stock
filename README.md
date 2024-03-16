@@ -50,7 +50,7 @@ m - 查詢月K線
 /n 2330
 ```
 
-## 使用TradingView查詢
+### 使用TradingView查詢
 
 ⭐️查看圖表
 ```cmd
