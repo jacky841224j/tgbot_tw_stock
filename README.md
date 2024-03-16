@@ -10,21 +10,11 @@ https://t.me/Tian_Stock_bot
 
 一、直接執行
 
-1.下載後將appsettings.json裡的BotToken換成自己的API Key後執行檔案即可使用
+下載後將appsettings.json裡的BotToken換成自己的API Key後執行檔案即可使用
 
 二、使用Docker執行
 
-1-1.直接從Docker Hub 抓取 
-```cmd
-  docker pull jacky841224j/tgbot_tw_stock_polling:latest
-
-```
-1-2.Docker執行
-```cmd
-  docker run jacky841224j/tgbot_tw_stock_polling:latest
-```
-
-2.將程式pull下來後打包成Docker使用
+將程式pull下來後打包成Docker使用
 ```cmd
   docker build -t 名稱 . --no-cache
 ```
