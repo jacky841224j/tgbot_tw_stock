@@ -1,10 +1,18 @@
-## TG 台股查詢機器人 基本使用教學  :memo:
+# TG 台股查詢機器人
+
+<div style="text-align: center;">
+    
+</div>
+
+## 使用教學  :memo:
 
 示範機器人(若不想自己部屬也可以直接使用)
 
 ```cmd
 https://t.me/Tian_Stock_bot
 ```
+
+&nbsp;
 
 使用方法：
 
@@ -20,7 +28,9 @@ https://t.me/Tian_Stock_bot
 docker build -t 名稱 . --no-cache
 ```
 
-## 機器人指令
+&nbsp;
+
+## 機器人指令 🗒
 
 ⭐️K線走勢圖
 ```cmd
@@ -72,6 +82,8 @@ ytd  - 今年度
 5y   - 五年
 all  - 全部
 ```
+
+&nbsp;
 
 ## 未來預計更新內容 📝
 
