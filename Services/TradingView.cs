@@ -21,7 +21,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         }
 
         /// <summary>
-        /// 取得圖表
+        /// 查詢走勢(日K)
         /// </summary>
         /// <param name="stockNumber">股票代號</param>
         /// <param name="chatID">使用者ID</param>
@@ -61,7 +61,7 @@ namespace Telegram.Bot.Examples.WebHook.Services
         }
 
         /// <summary>
-        /// 取得K線
+        /// ️指定圖表顯示時間範圍
         /// </summary>
         /// <param name="stockNumber">股票代號</param>
         /// <param name="chatID">使用者ID</param>

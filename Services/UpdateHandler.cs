@@ -74,33 +74,8 @@ public class UpdateHandler : IUpdateHandler
 
                 _logger.LogInformation("讀取網站中...");
 
-                #region 測試網址
-                //if (text[0] == "/url")
-                //{
-                //    await _botClient.SendTextMessageAsync(
-                //    chatId: message.Chat.Id,
-                //    text: "2023/10 已移除此功能，請使用其他功能",
-                //    parseMode: ParseMode.Html,
-                //    cancellationToken: cancellationToken);
-
-                    //if (text.Count == 2)
-                    //{
-                    //    Console.WriteLine($"讀取網站中...");
-                    //    await _browserHandlers._page.GotoAsync($"{text[1]}",
-                    //        new PageGotoOptions { WaitUntil = WaitUntilState.NetworkIdle }).WaitAsync(new TimeSpan(0, 1, 0));
-                    //    Console.WriteLine($"存取圖片中...");
-                    //    Stream stream = new MemoryStream(await _browserHandlers._page.ScreenshotAsync());
-                    //    sentMessage = await botClient.SendPhotoAsync(
-                    //    chatId: chatId,
-                    //    photo: stream,
-                    //    parseMode: ParseMode.Html,
-                    //    cancellationToken: cancellationToken);
-                    //}
-                //}
-                #endregion
-
                 #region TradingView
-
+                //查詢走勢(日K)
                 if (text[0] == "/chart")
                 {
                     if (text.Count == 2)
@@ -120,7 +95,7 @@ public class UpdateHandler : IUpdateHandler
                             cancellationToken);
                     }
                 }
-
+                //指定圖表顯示時間範圍
                 else if (text[0] == "/range")
                 {
                     var reply = await _botClient.SendTextMessageAsync(
