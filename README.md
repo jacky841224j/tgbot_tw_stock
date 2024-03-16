@@ -85,9 +85,9 @@ all  - 全部
 ```
 &nbsp;
 
-## 專案介紹
+## 📄  專案介紹
 
-### 程式流程說明
+### ✏️ 程式流程說明
 ```cmd
 專案使用Git搭配GitHub Action，執行CICD自動部屬流程
 將需要部屬的commit打上tag，push至GitHub觸發 GitHub Action
@@ -105,33 +105,33 @@ GitHub Action流程-
 
 &nbsp;
 
-### 系統架構
+### 🖥 系統架構
 &nbsp;
-![flowchart](readme/images/flowchart.png)
+<img src="readme/images/flowchart.png" alt="flowchart" height="400" width="600">
 
 &nbsp;
-### 使用介紹
+### 🕹 使用介紹
 &nbsp;
 ⭐️查詢️K線走勢圖
 
-<img src="readme/images/kline.jpg" alt="kline" height="300" width="400">
+<img src="readme/images/kline.jpg" alt="kline" height="300" width="450">
 &nbsp;
 
 ⭐️查詢️️股價資訊
 
-<img src="readme/images/detail.jpg" alt="detail" height="300" width="400">
+<img src="readme/images/detail.jpg" alt="detail" height="300" width="450">
 &nbsp;
 
 ⭐️查詢️️️績效資訊
 
-<img src="readme/images/proformance.jpg" alt="proformance" height="300" width="400">
+<img src="readme/images/proformance.jpg" alt="proformance" height="300" width="450">
 &nbsp;
 
 ⭐️查詢️️️公司新聞
 
-<img src="readme/images/news.jpg" alt="news" height="300" width="400">
+<img src="readme/images/news.jpg" alt="news" height="300" width="450">
 &nbsp;
 
 ⭐️查詢走勢(日K)
 
-<img src="readme/images/chart.jpg" alt="chart" height="300" width="400">
+<img src="readme/images/chart.jpg" alt="chart" height="300" width="450">
