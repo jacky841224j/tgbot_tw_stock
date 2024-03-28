@@ -107,7 +107,8 @@ all  - 全部
 GitHub Action流程-
 分為Build及Deploy
 1. Build-測試程式是否能正常執行,成功執行完畢觸發Deploy流程
-2. Deploy-將程式打包成Docker Images並上傳至Docker Hub
+2. Deploy-執行前將TG BOT KEY加入至appsetting中
+並將程式打包成Docker Images並上傳至Docker Hub
 3. 登入EC2，將剛上傳的Docker Images Pull下來並執行
 
 使用 C#.NET6 搭配 Telegram Bot套件製作
