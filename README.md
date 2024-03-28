@@ -47,18 +47,29 @@ m - 查詢月K線
 30m - 查詢30分K線
 60m - 查詢60分K線
 ```
+<img src="readme/images/kline.jpg" alt="kline" height="300" width="450">
+&nbsp;
+
 ⭐️股價資訊
 ```cmd
 /v 2330 
 ```
+<img src="readme/images/detail.jpg" alt="detail" height="300" width="450">
+&nbsp;
+
 ⭐️績效資訊
 ```cmd
 /p 2330 
 ```
+<img src="readme/images/proformance.jpg" alt="proformance" height="300" width="450">
+&nbsp;
+
 ⭐️個股新聞
 ```cmd
 /n 2330
 ```
+<img src="readme/images/news.jpg" alt="news" height="300" width="450">
+&nbsp;
 
 ### 使用TradingView查詢
 
@@ -66,6 +77,7 @@ m - 查詢月K線
 ```cmd
 /chart 2330
 ```
+<img src="readme/images/chart.jpg" alt="chart" height="300" width="450">
 
 ⭐️指定圖表顯示時間範圍
 ```cmd
@@ -123,28 +135,6 @@ GitHub Action流程-
 <img src="readme/images/flowchart.png" alt="flowchart" height="400" width="600">
 
 &nbsp;
-### 🕹 使用介紹
-&nbsp;
-⭐️查詢️K線走勢圖
 
-<img src="readme/images/kline.jpg" alt="kline" height="300" width="450">
-&nbsp;
 
-⭐️查詢️️股價資訊
 
-<img src="readme/images/detail.jpg" alt="detail" height="300" width="450">
-&nbsp;
-
-⭐️查詢️️️績效資訊
-
-<img src="readme/images/proformance.jpg" alt="proformance" height="300" width="450">
-&nbsp;
-
-⭐️查詢️️️公司新聞
-
-<img src="readme/images/news.jpg" alt="news" height="300" width="450">
-&nbsp;
-
-⭐️查詢走勢(日K)
-
-<img src="readme/images/chart.jpg" alt="chart" height="300" width="450">
